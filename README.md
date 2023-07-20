@@ -28,3 +28,15 @@ Deliveries:
  * steps documentation to do it from scratch
 
 Delivery details are in [this MVP-01.md](./docs/MVP-01.md) file.
+
+### MVP-02: GET Authors endpoint
+
+Deliveries:
+
+ * a basic implementation that expose an book route
+ * a GET endpoint that returns an book list ordered by id
+ * a database in sqlite3 to store book records and author relation
+ * filter items by book name, edition, publication year and author
+ * avoid duplicated inserts
+
+Delivery details are in [this MVP-02.md](./docs/MVP-02.md) file.

@@ -1,9 +1,9 @@
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
 const logger = require('morgan');
 
 const authorsRouter = require('./routes/authors');
+const booksRouter = require('./routes/books');
 
 var app = express();
 
@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/authors', authorsRouter);
+app.use('/books', booksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

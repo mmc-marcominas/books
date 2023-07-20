@@ -1,4 +1,4 @@
-# MVP-01: GET Authors endpoint
+# MVP-01: GET authors endpoint
 
 Deliveries:
 

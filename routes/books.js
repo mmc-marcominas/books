@@ -21,4 +21,13 @@ router.post('/', function(req, res, next) {
   }
 });
 
+/* PUT books */
+router.put('/:id', function(req, res, next) {
+  try {
+    res.json(books.update(req.params.id, req.body));
+  } catch(err) {
+    next(err);
+  }
+});
+
 module.exports = router;

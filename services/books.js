@@ -67,25 +67,30 @@ function parse(result) {
 function insert(book) {
   validate(book);
 
-  let message = 'Error creating book';
-  const { name, edition, year, authors } = book;
-
   try {
     db.transaction.begin();
 
+    const { name, edition, year, authors } = book;
     const result = db.run('INSERT INTO book (book_name, book_edition, publication_year) VALUES (@name, @edition, @year)', { name, edition, year });
+
     if (result.changes) {
       insertAuthors(result.lastInsertRowid, authors);
     }
-    message = 'Book created successfully';
-
     db.transaction.commit();
+
+    return {
+      message: 'Book created successfully'
+    }
   }
   catch (err) {
     db.transaction.rollback();
+    
+    throw {
+      status: 400,
+      message: 'Error creating book'
+    }
   }
 
-  return { message };
 }
 
 function insertAuthors(book_id, authors) {

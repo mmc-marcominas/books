@@ -36,30 +36,34 @@ function validate(authors) {
   }
 
   if (messages.length) {
-    const error = new Error(messages.join());
-    error.statusCode = 400;
-
-    throw error;
+    throw {
+      status: 400,
+      message: messages.join()
+    };
   }
 }
 
 function insert(author) {
   if (!author) {
-    const error = new Error('No author was provided');
-    error.statusCode = 400;
-
-    throw error;
+    throw {
+      status: 400,
+      message: 'Missing author name'
+    };
   }
 
   const name = author.replace(/(\r\n|\n|\r)/gm, "")
-  const result = db.run('INSERT INTO author (author_name) VALUES (@name)', { name });
-
-  let message = 'Error creating author';
-  if (result.changes) {
-    message = 'Author created successfully';
+  try {
+    const result = db.run('INSERT INTO author (author_name) VALUES (@name)', { name });
+    return {
+      message: 'Author created successfully'
+    }
   }
-
-  return { message };
+  catch (err) {
+    throw {
+      status: 400,
+      message: 'Error creating author'
+    };
+  }
 }
 
 module.exports = {

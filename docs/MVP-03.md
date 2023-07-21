@@ -4,7 +4,7 @@ Deliveries:
 
  * a POST endpoint that insert books according list uploaded in a file
  * fix tests on GET books endpoint
- * imporove formatting in docs
+ * improve formatting in docs
 
 ## Applied principles
 

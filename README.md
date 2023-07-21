@@ -18,7 +18,7 @@ This project aims to deliver an API with books and it's authors endpoints able t
 
 Let's stat with some minumum viable products.
 
-### MVP-01: GET Authors endpoint
+### MVP-01: GET authors endpoint
 
 Deliveries:
 
@@ -29,7 +29,7 @@ Deliveries:
 
 Delivery details are in [this MVP-01.md](./docs/MVP-01.md) file.
 
-### MVP-02: GET Authors endpoint
+### MVP-02: GET books endpoint
 
 Deliveries:
 
@@ -40,3 +40,12 @@ Deliveries:
  * avoid duplicated inserts
 
 Delivery details are in [this MVP-02.md](./docs/MVP-02.md) file.
+
+### MVP-03: authors upload
+
+Deliveries:
+
+ * a POST endpoint that insert books according list uploaded in a file
+ * fix tests on GET books endpoint
+
+Delivery details are in [this MVP-03.md](./docs/MVP-03.md) file.

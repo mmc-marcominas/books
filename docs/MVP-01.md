@@ -18,18 +18,21 @@ Deliveries:
    * deliver a SQL script that insert initials authors
    * deliver a Postman request that tests retrieving authors data
 
-### Postman request
+## Postman request
+
+### Postman sample result
 
 ![Postman body](./images/mvp-01-get-body.PNG "Postman body")
+
 ![Postman test results](./images/mvp-01-get-test-results.PNG "Postman test results")
 
-curl:
+### Postman curl
 
 ``` bash
 curl --location 'http://localhost:3000/authors'
 ```
 
-Tests:
+### Postman Tests
 
 ``` javascript
 const result = pm.response.json();

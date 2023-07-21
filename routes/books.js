@@ -15,9 +15,10 @@ router.get('/', function(req, res, next) {
 /* POST books */
 router.post('/', function(req, res, next) {
   try {
-    res.json(books.insert(req.body));
+    const result = books.insert(req.body);
+    res.status(result.status);
+    res.json(result);
   } catch(err) {
-    console.error(`Error while adding books `, err.message);
     next(err);
   }
 });

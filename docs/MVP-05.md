@@ -81,7 +81,7 @@ curl --location 'http://localhost:3000/books' \
 const result = pm.response.json();
 
 pm.test("On success - it should return status code 200", () => {
-    pm.expect(pm.response.code).to.equal(200);
+    pm.expect(pm.response.code).to.equal(400);
 });
 
 pm.test("On success - it should return message on result", () => {

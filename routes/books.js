@@ -15,9 +15,7 @@ router.get('/', function(req, res, next) {
 /* POST books */
 router.post('/', function(req, res, next) {
   try {
-    const result = books.insert(req.body);
-    res.status(result.status);
-    res.json(result);
+    res.json(books.insert(req.body));
   } catch(err) {
     next(err);
   }

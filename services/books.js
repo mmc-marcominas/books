@@ -79,14 +79,13 @@ function insert(book) {
     db.transaction.commit();
 
     return {
-      status: 200,
       message: 'Book created successfully'
     }
   }
   catch (err) {
     db.transaction.rollback();
     
-    return {
+    throw {
       status: 400,
       message: 'Error creating book'
     }

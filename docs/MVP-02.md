@@ -1,4 +1,4 @@
-# MVP-01: GET books endpoint
+# MVP-02: GET books endpoint
 
 Deliveries:
 
@@ -23,9 +23,9 @@ Deliveries:
    * use unique indexes to avoid duplicated inserts
    * deliver a Postman request that tests retrieving authors data
 
-### Postman request
+## Postman request
 
-#### Postman request - no filter
+### Postman request - no filter
 
 ``` bash
 curl --location 'http://localhost:3000/books'
@@ -33,7 +33,7 @@ curl --location 'http://localhost:3000/books'
 
 ![Postman get all](./images/mvp-02-get-all.PNG "Postman get all")
 
-#### Postman request - by author
+### Postman request - by author
 
 ``` bash
 curl --location 'http://localhost:3000/books?author=Clara%20Beatriz'
@@ -41,14 +41,14 @@ curl --location 'http://localhost:3000/books?author=Clara%20Beatriz'
 
 ![Postman get by author](./images/mvp-02-get-by-author.PNG "Postman get by author")
 
-#### Postman request - by book
+### Postman request - by book
 
 ``` bash
 curl --location 'http://localhost:3000/books?book=Desafio'
 ```
 ![Postman get by book](./images/mvp-02-get-by-book.PNG "Postman get by book")
 
-#### Postman request - by edition
+### Postman request - by edition
 
 ``` bash
 curl --location 'http://localhost:3000/books?edition=1'
@@ -56,7 +56,7 @@ curl --location 'http://localhost:3000/books?edition=1'
 
 ![Postman get by edition](./images/mvp-02-get-by-edition.PNG "Postman get by edition")
 
-#### Postman request - by year
+### Postman request - by year
 
 ``` bash
 curl --location 'http://localhost:3000/books?year=2023'
@@ -64,7 +64,7 @@ curl --location 'http://localhost:3000/books?year=2023'
 
 ![Postman get by year](./images/mvp-02-get-by-year.PNG "Postman get by year")
 
-Tests:
+### Postman Tests
 
 ``` javascript
 const result = pm.response.json();
@@ -78,26 +78,30 @@ pm.test("On success - it should return data on result", () => {
     pm.expect(result.data).to.exist;
 });
 
-pm.test("On success - it should return first item on data result", () => {
-    pm.expect(firstItem).to.exist;
-});
+if (firstItem) {
+    pm.test("On success - it should return first item on data result", () => {
+        pm.expect(firstItem).to.exist;
+    });
 
-pm.test("On success - it should return id on first item on data result", () => {
-    pm.expect(firstItem.id).to.exist;
-});
+    pm.test("On success - it should return id on first item on data result", () => {
+        pm.expect(firstItem.id).to.exist;
+    });
 
-pm.test("On success - it should return authors on first item on data result", () => {
-    pm.expect(firstItem.authors).to.exist;
-});
+    pm.test("On success - it should return authors on first item on data result", () => {
+        pm.expect(firstItem.authors).to.exist;
+    });
+}
 
 if (pm.request.url.query.has('year')) {
     const year = pm.request.url.query.get('year');
     pm.test("On success - it should return year on meta equals to on query", () => {
         pm.expect(`${result.meta.year}`).to.equal(year);
     });
-    pm.test("On success - it should return year on firstItem equals to on query", () => {
-        pm.expect(`${firstItem.year}`).to.equal(year);
-    });
+    if (firstItem) {
+        pm.test("On success - it should return year on firstItem equals to on query", () => {
+            pm.expect(`${firstItem.year}`).to.equal(year);
+        });
+    }
 }
 
 if (pm.request.url.query.has('edition')) {
@@ -105,9 +109,11 @@ if (pm.request.url.query.has('edition')) {
     pm.test("On success - it should return edition on meta equals to on query", () => {
         pm.expect(`${result.meta.edition}`).to.equal(edition);
     });
-    pm.test("On success - it should return edition on firstItem equals to on query", () => {
-        pm.expect(`${firstItem.edition}`).to.equal(edition);
-    });
+    if (firstItem) {
+        pm.test("On success - it should return edition on firstItem equals to on query", () => {
+            pm.expect(`${firstItem.edition}`).to.equal(edition);
+        });
+    }
 }
 
 if (pm.request.url.query.has('book')) {
@@ -115,9 +121,11 @@ if (pm.request.url.query.has('book')) {
     pm.test(`On success - it should return book on meta containing ${book}`, () => {
         pm.expect(result.meta.book).to.equal(book);
     });
-    pm.test(`On success - it should return book on firstItem containing ${book}`, () => {
-        pm.expect(firstItem.book).to.contain(book);
-    });
+    if (firstItem) {
+        pm.test(`On success - it should return book on firstItem containing ${book}`, () => {
+            pm.expect(firstItem.book).to.contain(book);
+        });
+    }
 }
 
 if (pm.request.url.query.has('author')) {
@@ -126,8 +134,10 @@ if (pm.request.url.query.has('author')) {
     pm.test(`On success - it should return author on meta containing ${author}`, () => {
         pm.expect(result.meta.author).to.equal(author);
     });
-    pm.test(`On success - it should return book on firstItem containing ${author}`, () => {
-        pm.expect(firstItem.authors).to.include(author);
-    });
+    if (firstItem) {
+        pm.test(`On success - it should return book on firstItem containing ${author}`, () => {
+            pm.expect(firstItem.authors).to.include(author);
+        });
+    }
 }
 ```

@@ -1,4 +1,5 @@
 const db = require('../infra/db');
+const { getAutorId, insertAuthor } = require('./authors');
 
 function list(params) {
   const criteria = filter(params);
@@ -19,7 +20,7 @@ function filter(params) {
   const { book, edition, year, author } = params;
   const meta = {};
   let conditions = '1 = 1'
-  
+
   if (book) {
     conditions += ` AND book.book_name LIKE '%${book}%'`
     meta.book = book
@@ -63,6 +64,76 @@ function parse(result) {
   return data;
 }
 
+function insert(book) {
+  validate(book);
+
+  let message = 'Error creating book';
+  const { name, edition, year, authors } = book;
+
+  try {
+    db.transaction.begin();
+
+    const result = db.run('INSERT INTO book (book_name, book_edition, publication_year) VALUES (@name, @edition, @year)', { name, edition, year });
+    if (result.changes) {
+      insertAuthors(result.lastInsertRowid, authors);
+    }
+    message = 'Book created successfully';
+
+    db.transaction.commit();
+  }
+  catch (err) {
+    db.transaction.rollback();
+  }
+
+  return { message };
+}
+
+function insertAuthors(book_id, authors) {
+  for (const author of authors) {
+    let author_id = getAutorId(author)
+
+    if (!author_id) {
+      author_id = insertAuthor(author)
+    }
+
+    db.run('INSERT INTO book_author (book_id, author_id) VALUES (@book_id, @author_id)', { book_id, author_id });
+  }
+}
+
+function validate(book) {
+  let messages = [];
+
+  console.log(book);
+
+  if (!book) {
+    messages.push('No book is provided');
+  }
+
+  if (!book.name) {
+    messages.push('Name is empty');
+  }
+
+  if (!book.edition) {
+    messages.push('Edition is empty');
+  }
+
+  if (!book.year) {
+    messages.push('Publication year is empty');
+  }
+
+  if (!book.authors || book.authors.length < 1) {
+    messages.push('Authors is empty');
+  }
+
+  if (messages.length) {
+    const error = new Error(messages.join());
+    error.statusCode = 400;
+
+    throw error;
+  }
+}
+
 module.exports = {
-  list
+  list,
+  insert
 }

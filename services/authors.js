@@ -44,16 +44,8 @@ function validate(authors) {
 }
 
 function insert(author) {
-  if (!author) {
-    throw {
-      status: 400,
-      message: 'Missing author name'
-    };
-  }
-
-  const name = author.replace(/(\r\n|\n|\r)/gm, "")
   try {
-    const result = db.run('INSERT INTO author (author_name) VALUES (@name)', { name });
+    insertAuthor(author);
     return {
       message: 'Author created successfully'
     }
@@ -66,8 +58,31 @@ function insert(author) {
   }
 }
 
+function getAutorId(author) {
+  const query = `SELECT author.id FROM author WHERE author.author_name = '${author}'`
+  const data = db.query(query);
+
+  return  data.length === 1 ? data[0].id : null;
+}
+
+function insertAuthor(author) {
+  if (!author) {
+    throw {
+      status: 400,
+      message: 'Missing author name'
+    };
+  }
+
+  const name = author.replace(/(\r\n|\n|\r)/gm, "")
+  const result = db.run('INSERT INTO author (author_name) VALUES (@name)', { name });
+
+  return result.lastInsertRowid;
+}
+
 module.exports = {
   list,
   insert,
-  upload
+  upload,
+  getAutorId,
+  insertAuthor
 }

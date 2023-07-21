@@ -133,7 +133,36 @@ function validate(book) {
   }
 }
 
+function update(id, book) {
+  validate(book);
+
+  try {
+    db.transaction.begin();
+    const { name, edition, year, authors } = book;
+    const result = db.run(`UPDATE book SET book_name = @name, book_edition = @edition, publication_year = @year WHERE id = @id`, { id, name, edition, year });
+
+    if (result.changes) {
+      db.run('DELETE FROM book_author WHERE book_id = @id', { id });
+      insertAuthors(id, authors);
+    }
+    db.transaction.commit();
+
+    return {
+      message: 'Book updated successfully'
+    }
+  }
+  catch (err) {
+    db.transaction.rollback();
+    
+    throw {
+      status: 400,
+      message: 'Error updating book'
+    }
+  }
+}
+
 module.exports = {
   list,
-  insert
+  insert,
+  update
 }

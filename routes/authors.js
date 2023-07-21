@@ -38,4 +38,13 @@ router.post('/upload', function (req, res, next) {
   });
 });
 
+/* POST author */
+router.post('/', function(req, res, next) {
+  try {
+    res.json(authors.insert(req.body.name));
+  } catch(err) {
+    next(err);
+  }
+});
+
 module.exports = router;

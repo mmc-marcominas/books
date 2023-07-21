@@ -49,3 +49,14 @@ Deliveries:
  * fix tests on GET books endpoint
 
 Delivery details are in [this MVP-03.md](./docs/MVP-03.md) file.
+
+### MVP-04: Other authors and books endpoints
+
+Deliveries:
+
+ * a POST endpoint that insert author
+ * avoid duplication author insertion
+ * fix error rendering
+ * fix typo in docs
+
+Delivery details are in [this MVP-04.md](./docs/MVP-04.md) file.

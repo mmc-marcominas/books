@@ -1,4 +1,4 @@
-# MVP-04: Other authors and books endpoints
+# MVP-04: POST author endpoint
 
 Deliveries:
 

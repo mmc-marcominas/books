@@ -20,7 +20,40 @@ Deliveries:
 
 ## Postman request
 
-### Postman request - error no author name
+
+### POST - insert author
+
+curl:
+
+``` bash
+curl --location 'http://localhost:3000/authors/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Nome do autor"
+}'
+```
+
+![Postman post author](./images/mvp-04-post.PNG "Postman post author")
+
+#### Postman tests
+
+``` javascript
+const result = pm.response.json();
+
+pm.test("On success - it should return status code 200", () => {
+    pm.expect(pm.response.code).to.equal(200);
+});
+
+pm.test("On success - it should return message on result", () => {
+    pm.expect(result.message).to.exist;
+});
+
+pm.test("On success - it should return successfully message", () => {
+    pm.expect(result.message).to.equal("Author created successfully");
+});
+```
+
+### POST - error no author name
 
 ``` bash
 curl --location 'http://localhost:3000/authors/' \
@@ -43,7 +76,7 @@ curl --location 'http://localhost:3000/authors/' \
 ``` javascript
 const result = pm.response.json();
 
-pm.test("On success - it should return status code 200", () => {
+pm.test("On success - it should return status code 400", () => {
     pm.expect(pm.response.code).to.equal(400);
 });
 
@@ -56,7 +89,7 @@ pm.test("On success - it should return successfully message", () => {
 });
 ```
 
-### Postman request - error duplicated author
+### POST - error duplicated author
 
 ``` bash
 curl --location 'http://localhost:3000/books'
@@ -69,7 +102,7 @@ curl --location 'http://localhost:3000/books'
 ``` javascript
 const result = pm.response.json();
 
-pm.test("On success - it should return status code 200", () => {
+pm.test("On success - it should return status code 400", () => {
     pm.expect(pm.response.code).to.equal(400);
 });
 
@@ -78,6 +111,6 @@ pm.test("On success - it should return message on result", () => {
 });
 
 pm.test("On success - it should return successfully message", () => {
-    pm.expect(result.message).to.equal("Missing author name");
+    pm.expect(result.message).to.equal("Error creating author");
 });
 ```

@@ -1,12 +1,12 @@
 const db = require('../infra/db');
 
 function list() {
-  const query = `SELECT author.id, author.author_name as author FROM author ORDER BY author.id`
+  const query = `SELECT author.id, author.author_name as author FROM author ORDER BY author.id`;
   const data = db.query(query);
 
   return {
     data
-  }
+  };
 }
 
 function upload(authors) {
@@ -17,7 +17,7 @@ function upload(authors) {
   for (const author of authors) {
     const inserted = insert(author);
     if (inserted !== 'Author created successfully') {
-      message = inserted
+      message = inserted;
     }
   }
 
@@ -25,7 +25,7 @@ function upload(authors) {
 }
 
 function validate(authors) {
-  const messages = []
+  const messages = [];
 
   if (!authors) {
     messages.push('No authors wss provided');
@@ -44,25 +44,18 @@ function validate(authors) {
 }
 
 function insert(author) {
-  try {
-    insertAuthor(author);
-    return {
-      message: 'Author created successfully'
-    }
-  }
-  catch (err) {
-    throw {
-      status: 400,
-      message: 'Error creating author'
-    };
-  }
+  insertAuthor(author);
+
+  return {
+    message: 'Author created successfully'
+  };
 }
 
 function getAutorId(author) {
-  const query = `SELECT author.id FROM author WHERE author.author_name = '${author}'`
+  const query = `SELECT author.id FROM author WHERE author.author_name = '${author}'`;
   const data = db.query(query);
 
-  return  data.length === 1 ? data[0].id : null;
+  return data.length === 1 ? data[0].id : null;
 }
 
 function insertAuthor(author) {
@@ -73,10 +66,18 @@ function insertAuthor(author) {
     };
   }
 
-  const name = author.replace(/(\r\n|\n|\r)/gm, "")
-  const result = db.run('INSERT INTO author (author_name) VALUES (@name)', { name });
+  try {
+    const name = author.replace(/(\r\n|\n|\r)/gm, "");
+    const result = db.run('INSERT INTO author (author_name) VALUES (@name)', { name });
 
-  return result.lastInsertRowid;
+    return result.lastInsertRowid;
+  }
+  catch {
+    throw {
+      status: 400,
+      message: 'Error creating author'
+    };
+  }
 }
 
 module.exports = {

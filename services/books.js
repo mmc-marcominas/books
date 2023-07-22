@@ -84,7 +84,7 @@ function insert(book) {
   }
   catch (err) {
     db.transaction.rollback();
-    
+
     throw {
       status: 400,
       message: 'Error creating book'
@@ -158,7 +158,7 @@ function update(id, book) {
   }
   catch (err) {
     db.transaction.rollback();
-    
+
     throw {
       status: 400,
       message: 'Error updating book'
@@ -166,8 +166,27 @@ function update(id, book) {
   }
 }
 
+function remove(id) {
+  const authors = db.run('DELETE FROM book_author WHERE book_id = @id', { id });
+
+  if (authors.changes) {
+    const book = db.run('DELETE FROM book WHERE id = @id', { id });
+    if (book.changes) {
+      return {
+        message: 'Book deleted successfully'
+      }
+    }
+  }
+
+  throw {
+    status: 400,
+    message: 'Error on deleting book'
+  };
+}
+
 module.exports = {
   list,
   insert,
-  update
+  update,
+  delete: remove
 }

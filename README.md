@@ -60,3 +60,43 @@ Deliveries:
  * fix typo in docs
 
 Delivery details are in [this MVP-04.md](./docs/MVP-04.md) file.
+
+### MVP-05: POST book endpoint
+
+Deliveries:
+
+ * a POST endpoint that insert book
+ * implement transaction on database operations
+ * implement author insertion if not exists features
+ * fix typo in docs
+
+Delivery details are in [this MVP-05.md](./docs/MVP-05.md) file.
+
+### MVP-06: PUT book endpoint
+
+Deliveries:
+
+ * a PUT endpoint that update book
+ * implement transaction on database operations
+
+Delivery details are in [this MVP-06.md](./docs/MVP-06.md) file.
+
+### MVP-07: DELETE book endpoint
+
+Deliveries:
+
+ * a DELETE endpoint that remove book
+ * test success and failure on Postman
+
+Delivery details are in [this MVP-07.md](./docs/MVP-07.md) file.
+
+### MVP-08: Other authors and books endpoints
+
+Deliveries:
+
+ * fix typos in docs
+ * add Postman tests
+   * upload authors
+   * post author
+ * change upload response to JSON
+ * refactor insert author method

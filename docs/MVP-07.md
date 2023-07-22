@@ -1,4 +1,4 @@
-# MVP-06: DELETE book endpoint
+# MVP-07: DELETE book endpoint
 
 Deliveries:
 

@@ -21,6 +21,8 @@ Deliveries:
 
 ## Postman request
 
+### POST - upload authors
+
 CSV file sample
 
 ``` text
@@ -42,7 +44,7 @@ curl --location 'http://localhost:3000/authors/upload' \
 
 ![Postman post upload authors](./images/mvp-03-post-upload.PNG "Postman post upload authors")
 
-### Before authors insertion
+#### After authors insertion
 
 curl:
 
@@ -51,3 +53,21 @@ curl --location 'http://localhost:3000/authors'
 ```
 
 ![Postman get all authors](./images/mvp-03-get-all.PNG "Postman get all authors")
+
+#### Postman tests
+
+``` javascript
+const result = pm.response.json();
+
+pm.test("On success - it should return status code 200", () => {
+    pm.expect(pm.response.code).to.equal(200);
+});
+
+pm.test("On success - it should return message on result", () => {
+    pm.expect(result.message).to.exist;
+});
+
+pm.test("On success - it should return successfully message", () => {
+    pm.expect(result.message).to.equal("Authors uploaded successfully");
+});
+```

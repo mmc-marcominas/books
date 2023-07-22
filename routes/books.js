@@ -35,7 +35,6 @@ router.delete('/:id', function(req, res, next) {
   try {
     res.json(books.delete(req.params.id));
   } catch(err) {
-    console.error(`Error while deleting book `, err.message);
     next(err);
   }
 });

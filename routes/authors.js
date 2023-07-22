@@ -29,20 +29,20 @@ router.post('/upload', function (req, res, next) {
         error.statusCode = 400;
         throw error;
       }
-      const items = data.split('\n')
-      result = authors.upload(items)
-  
+
+      const items = data.split('\n');
+      result = authors.upload(items);
     });
 
-    res.send('Authors upladed successfully');
+    res.json({ "message": 'Authors uploaded successfully' });
   });
 });
 
 /* POST author */
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
   try {
     res.json(authors.insert(req.body.name));
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 });

@@ -18,9 +18,12 @@ const transaction = {
     db.prepare('COMMIT').run();
   },
   rollback() {
-    if (db.inTransaction) {
+    if (this.inTransaction) {
       db.prepare('ROLLBACK').run();
     }
+  },
+  get inTransaction() {
+    return db.inTransaction
   }
 }
 

@@ -80,7 +80,7 @@ Deliveries:
  * a database in sqlite3 to store author records
  * steps documentation to do it from scratch
 
-Delivery details are in [this MVP-01.md](./docs/MVP-01.md) doc.
+Delivery details are in [this MVP-01.md](./express/MVP-01.md) doc.
 
 ### MVP-02: GET books endpoint
 
@@ -92,7 +92,7 @@ Deliveries:
  * filter items by book name, edition, publication year and author
  * avoid duplicated inserts
 
-Delivery details are in this [MVP-02.md](./docs/MVP-02.md) doc.
+Delivery details are in this [MVP-02.md](./express/MVP-02.md) doc.
 
 ### MVP-03: authors upload
 
@@ -101,7 +101,7 @@ Deliveries:
  * a POST endpoint that insert books according list uploaded in a file
  * fix tests on GET books endpoint
 
-Delivery details are in this [MVP-03.md](./docs/MVP-03.md) doc.
+Delivery details are in this [MVP-03.md](./express/MVP-03.md) doc.
 
 ### MVP-04: Other authors and books endpoints
 
@@ -112,7 +112,7 @@ Deliveries:
  * fix error rendering
  * fix typo in docs
 
-Delivery details are in this [MVP-04.md](./docs/MVP-04.md) doc.
+Delivery details are in this [MVP-04.md](./express/MVP-04.md) doc.
 
 ### MVP-05: POST book endpoint
 
@@ -123,7 +123,7 @@ Deliveries:
  * implement author insertion if not exists features
  * fix typo in docs
 
-Delivery details are in this [MVP-05.md](./docs/MVP-05.md) doc.
+Delivery details are in this [MVP-05.md](./express/MVP-05.md) doc.
 
 ### MVP-06: PUT book endpoint
 
@@ -132,7 +132,7 @@ Deliveries:
  * a PUT endpoint that update book
  * implement transaction on database operations
 
-Delivery details are in this [MVP-06.md](./docs/MVP-06.md) doc.
+Delivery details are in this [MVP-06.md](./express/MVP-06.md) doc.
 
 ### MVP-07: DELETE book endpoint
 
@@ -141,7 +141,7 @@ Deliveries:
  * a DELETE endpoint that remove book
  * test success and failure on Postman
 
-Delivery details are in this [MVP-07.md](./docs/MVP-07.md) doc.
+Delivery details are in this [MVP-07.md](./express/MVP-07.md) doc.
 
 ### MVP-08: Other authors and books endpoints
 
@@ -161,4 +161,4 @@ Deliveries:
  * configure jest in project
  * configure code coverage
 
-Delivery details are in this [MVP-09.md](./docs/MVP-09.md) doc.
+Delivery details are in this [MVP-09.md](./express/MVP-09.md) doc.

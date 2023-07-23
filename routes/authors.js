@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const authors = require('../services/authors');
 const formidable = require('formidable');
 const fs = require('fs');
+
+const AuthorService = require('../services/authors');
+const db = require('../infra/db');
+
+const authors = new AuthorService(db);
 
 /* List authors. */
 router.get('/', function (req, res, next) {

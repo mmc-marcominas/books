@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const books = require('../services/books');
+
+const BookService = require('../services/books');
+const db = require('../infra/db');
+
+const books = new BookService(db);
 
 /* List books. */
 router.get('/', function(req, res, next) {

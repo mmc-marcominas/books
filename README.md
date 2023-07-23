@@ -4,7 +4,7 @@ This project intends to be a implementation to a simple REST API solution offeri
 
 A express.js implementation is provided on `feature/express` branch. For now, branches will be kept to history purpose.
 
-Check this [README.md doc](https://github.com/mmc-marcominas/books/blob/feature/express/README.md) to install and use express.js implementation.
+Check this [README.md doc](https://github.com/mmc-marcominas/books/blob/feature/express/docs/express.md) to install and use express.js implementation.
 
 The main idea is use some principles:
 

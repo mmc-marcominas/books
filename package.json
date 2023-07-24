@@ -1,0 +1,20 @@
+{
+  "name": "books-fastify",
+  "version": "0.0.0",
+  "description": "A books REST API implemented with fastify",
+  "main": "index.js",
+  "scripts": {
+    "mongo:start": "docker run --rm -d -p 27017:27017 --name mongo-books mongo:4",
+    "mongo:stop": "docker stop mongo-books",
+    "dev": "npm run start -- --watch --pretty-logs --debug",
+    "start": "fastify start -l info --options src/app.js"
+  },
+  "dependencies": {
+    "@fastify/env": "^4.2.0",
+    "@fastify/multipart": "^7.7.2",
+    "fastify": "^4.20.0",
+    "fastify-cli": "^5.7.1",
+    "fastify-mongodb": "^4.2.0",
+    "fastify-plugin": "^4.5.1"
+  }
+}

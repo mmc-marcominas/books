@@ -1,7 +1,6 @@
 'use strict'
 
 const upload = require('../file')
-const { authorExists, insertAuthor } = require('./common')
 
 module.exports = async function uploadAuthor(request, reply) {
   const content = await upload.getContent(request)
@@ -13,12 +12,13 @@ module.exports = async function uploadAuthor(request, reply) {
   }
 
   authors.shift()
-  authors.forEach(async (item) => {
+  const name = this.database.collections.authors
+  for (const item of authors) {
     const author = item.replace(/(\r\n|\n|\r)/gm, "");
-    if (!await authorExists(this, author)) {
-      await insertAuthor(this, {author})
+    if (!await this.database.exists(name, { author})) {
+      await this.database.create(name, { author })
     }
-  });
+  }
 
   reply.code(200)
   return { message: 'Authors uploaded successfully' }

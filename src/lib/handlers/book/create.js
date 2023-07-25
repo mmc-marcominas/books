@@ -1,32 +1,27 @@
 'use strict'
 
-const { bookExists } = require('./common')
-const { authorExists, insertAuthor } = require('../author/common')
-
 module.exports = async function createBook(request, reply) {
-  const collection = this.mongo.db.collection('books')
-  if (await bookExists(this, request.body.book)) {
+  const { authors, books } = this.database.collections
+
+  if (await this.database.exists(books, { book: request.body.book })) {
     reply.code(400)
     return { message: 'Error creating book' }
   }
 
   const inserted = []
   for (const author of request.body.authors) {
-    const exists = await authorExists(this, author)
+    const exists = await this.database.exists(authors, { author })
     if (!exists) {
-      await insertAuthor(this, { author })
+      await this.database.create(authors, { author })
       inserted.push(author)
     }
   }
 
-  const result = await collection.insertOne(request.body)
+  const result = await this.database.create(books, {... request.body})
   reply.code(201)
 
-  if (inserted.length) {
-    console.log(JSON.stringify(inserted))
-  }
   return {
-    id: result.insertedId,
+    id: result.Id,
     message: 'Book created successfully'
   }
 }

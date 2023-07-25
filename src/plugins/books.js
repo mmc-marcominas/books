@@ -5,6 +5,7 @@ const schemas = require('../lib/schemas/book')
 
 function bookPlugin (app, opts, next) {
   app.register(require('fastify-mongodb'), opts.mongo)
+  app.register(require('./database'))
 
   app.post('/books', {
     schema: {

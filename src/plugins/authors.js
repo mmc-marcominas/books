@@ -5,6 +5,7 @@ const schemas = require('../lib/schemas/author')
 
 function authorPlugin (app, opts, next) {
   app.register(require('fastify-mongodb'), opts.mongo)
+  app.register(require('./database'))
 
   app.post('/authors', {
     schema: {

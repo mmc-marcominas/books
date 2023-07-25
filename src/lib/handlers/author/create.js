@@ -1,14 +1,14 @@
 'use strict'
 
-const { authorExists, insertAuthor } = require('./common')
-
 module.exports = async function createAuthor(request, reply) {
-  if (await authorExists(this, request.body.author)) {
+  const name = this.database.collections.authors
+
+  if (await this.database.exists(name, { ... request.body })) {
     reply.code(400)
     return { message: 'Error creating author' }
   }
 
-  const result = await insertAuthor(this, request.body)
+  const result = await this.database.create(name, request.body)
   reply.code(201)
 
   return {

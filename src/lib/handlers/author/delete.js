@@ -1,14 +1,18 @@
 'use strict'
 
 module.exports = async function deleteAuthor(request, reply) {
-  const collection = this.mongo.db.collection('authors')
-  const result = await collection.deleteOne({
-    _id: this.mongo.ObjectId(request.params.id)
-  })
-  if (result.deletedCount === 0) {
-    const error = new Error('Author not found: ' + request.params.id)
+  const name = this.database.collections.authors
+  const { id } = request.params
+  const result = await this.database.delete(name, id)
+
+  if (!result.deleted) {
+    const error = new Error('Author not found: ' + id)
     error.status = 404
     throw error
   }
-  return { id: request.params.id }
+
+  return {
+    id: id,
+    message: "Author updated successfully"
+  }
 }

@@ -1,7 +1,7 @@
 'use strict'
 
 const upload = require('../file')
-const { authorExists } = require('./common')
+const { authorExists, insertAuthor } = require('./common')
 
 module.exports = async function uploadAuthor(request, reply) {
   const content = await upload.getContent(request)
@@ -13,11 +13,10 @@ module.exports = async function uploadAuthor(request, reply) {
   }
 
   authors.shift()
-  const collection = this.mongo.db.collection('authors')
   authors.forEach(async (item) => {
     const author = item.replace(/(\r\n|\n|\r)/gm, "");
-    if (!await authorExists(collection, author)) {
-      await collection.insertOne({author})
+    if (!await authorExists(this, author)) {
+      await insertAuthor(this, {author})
     }
   });
 

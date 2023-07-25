@@ -1,19 +1,18 @@
 'use strict'
 
-const { authorExists } = require('./common')
+const { authorExists, insertAuthor } = require('./common')
 
 module.exports = async function createAuthor(request, reply) {
-  const collection = this.mongo.db.collection('authors')
-  if (await authorExists(collection, request.body.author)) {
+  if (await authorExists(this, request.body.author)) {
     reply.code(400)
     return { message: 'Error creating author' }
   }
 
-  const result = await collection.insertOne(request.body)
+  const result = await insertAuthor(this, request.body)
   reply.code(201)
 
   return {
-    id: result.insertedId,
+    id: result.id,
     message: 'Author created successfully'
   }
 }

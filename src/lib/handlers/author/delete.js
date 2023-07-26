@@ -18,6 +18,6 @@ module.exports = async function deleteAuthor(request, reply) {
 
   return {
     id: id,
-    message: "Author updated successfully"
+    message: "Author deleted successfully"
   }
 }

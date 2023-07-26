@@ -1,5 +1,11 @@
 'use strict'
 
+/** 
+* Create a document on books collection.
+* @param {Request} request - HTTP request with book object in body.
+* @param {Response} reply - HTTP response object.
+* @return {Object} It will return created document id and message on succes or HTTP 440 error if not.
+*/
 module.exports = async function createBook(request, reply) {
   const authors = this.database.collections.authors
 

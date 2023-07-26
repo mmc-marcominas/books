@@ -3,9 +3,9 @@
 const handlers = require('../lib/handlers/author')
 const schemas = require('../lib/schemas/author')
 
-function authorPlugin (app, opts, next) {
+function authorPlugin(app, opts, next) {
   app.register(require('fastify-mongodb'), opts.mongo)
-  app.register(require('./database'), {collectionName: 'authors'})
+  app.register(require('./database'), { collectionName: 'authors' })
 
   app.post('/authors', {
     schema: {
@@ -14,7 +14,7 @@ function authorPlugin (app, opts, next) {
   }, handlers.createAuthor)
 
   app.post('/authors/upload', {
-    
+
   }, handlers.uploadAuthor)
 
   app.get('/authors', {

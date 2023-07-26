@@ -3,9 +3,9 @@
 const handlers = require('../lib/handlers/book')
 const schemas = require('../lib/schemas/book')
 
-function bookPlugin (app, opts, next) {
+function bookPlugin(app, opts, next) {
   app.register(require('fastify-mongodb'), opts.mongo)
-  app.register(require('./database'), {collectionName: 'books'})
+  app.register(require('./database'), { collectionName: 'books' })
 
   app.post('/books', {
     schema: {

@@ -2,20 +2,28 @@
 
 const fp = require('fastify-plugin')
 
-function decorateFastifyInstance(fastify) {
+function decorateFastifyInstance(fastify, opts) {
 
   const collections = {
     authors: "authors",
     books: "books"
   }
 
-  async function exists(collectionName, condictions) {
+  async function exists(condictions) {
+    return existsIn(opts.collectionName, condictions)
+  }
+
+  async function existsIn(collectionName, condictions) {
     const collection = fastify.mongo.db.collection(collectionName)
     const items = await collection.find(condictions).toArray()
     return items.length
   }
 
-  async function create(collectionName, item, callback = undefined) {
+  async function create(item, callback = undefined) {
+    return createIn(opts.collectionName, item, callback)
+  }
+
+  async function createIn(collectionName, item, callback = undefined) {
     const collection = fastify.mongo.db.collection(collectionName)
     const result = await collection.insertOne(item)
 
@@ -26,8 +34,8 @@ function decorateFastifyInstance(fastify) {
     return { id: result.insertedId }
   }
 
-  async function deleteOne(collectionName, id, callback = undefined) {
-    const collection = fastify.mongo.db.collection(collectionName)
+  async function deleteOne(id, callback = undefined) {
+    const collection = fastify.mongo.db.collection(opts.collectionName)
     const result = await collection.deleteOne({
       _id: fastify.mongo.ObjectId(id)
     })
@@ -39,8 +47,8 @@ function decorateFastifyInstance(fastify) {
     return { deleted: result.deletedCount > 0 }
   }
 
-  async function read(collectionName) {
-    const collection = fastify.mongo.db.collection(collectionName)
+  async function read() {
+    const collection = fastify.mongo.db.collection(opts.collectionName)
     const items = await collection.find().toArray()
     const result = items.map(d => {
       d.id = d._id.toString()
@@ -50,8 +58,8 @@ function decorateFastifyInstance(fastify) {
     return result
   }
 
-  async function update(collectionName, id, values) {
-    const collection = fastify.mongo.db.collection(collectionName)
+  async function update( id, values) {
+    const collection = fastify.mongo.db.collection(opts.collectionName)
     const result = await collection.updateOne(
       { _id: fastify.mongo.ObjectId(id) },
       { $set: values }
@@ -82,6 +90,8 @@ function decorateFastifyInstance(fastify) {
   const database = {
     collections,
     exists,
+    existsIn,
+    createIn,
     parseBook,
 
     create,
@@ -95,8 +105,8 @@ function decorateFastifyInstance(fastify) {
   }
 }
 
-async function fastifyDatabase(fastify) {
-  decorateFastifyInstance(fastify)
+async function fastifyDatabase(fastify, opts) {
+  decorateFastifyInstance(fastify, opts)
 }
 
 module.exports = fp(fastifyDatabase, {

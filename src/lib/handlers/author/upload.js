@@ -12,11 +12,10 @@ module.exports = async function uploadAuthor(request, reply) {
   }
 
   authors.shift()
-  const name = this.database.collections.authors
   for (const item of authors) {
     const author = item.replace(/(\r\n|\n|\r)/gm, "");
-    if (!await this.database.exists(name, { author})) {
-      await this.database.create(name, { author })
+    if (!await this.database.exists({ author})) {
+      await this.database.create({ author })
     }
   }
 

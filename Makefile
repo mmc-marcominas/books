@@ -5,12 +5,17 @@ bookV2 := '{ "book": "A família Dorta Almeida", "edition": 1, "year": 2021, "au
 
 # Usage samples:
 # 
-#   make get-authors
 #   make post-author author="Author name"
 #   make put-author author="Author name changed" id=61742e31dda30cab65317784
 #   make upload-author file="./src/docs/authors.csv"
 #   make upload-author file="./src/docs/theGuardianAutors.csv"
 #   make delete-author id=61742e31dda30cab65317784
+#   make test-author
+
+# make get-books 
+# make post-book 
+# make put-book id=61742e31dda30cab65317784
+# make delete-book id=61742e31dda30cab65317784
 
 get-authors:
 		@curl \

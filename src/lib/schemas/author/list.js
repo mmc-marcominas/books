@@ -1,6 +1,6 @@
 'use strict'
 
-const authorList = 
+const list =
 {
   type: 'object',
   properties: {
@@ -19,5 +19,5 @@ const authorList =
 }
 
 module.exports = {
-  authorList
+  list
 }

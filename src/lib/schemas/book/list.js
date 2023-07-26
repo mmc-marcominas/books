@@ -1,6 +1,6 @@
 'use strict'
 
-const bookList = 
+const list = 
 {
   type: 'object',
   properties: {
@@ -27,5 +27,5 @@ const bookList =
 }
 
 module.exports = {
-  bookList
+  list
 }

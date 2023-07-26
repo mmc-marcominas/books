@@ -1,19 +1,27 @@
 'use strict'
 
 const fp = require('fastify-plugin')
+const collections = {
+  authors: "authors",
+  books: "books"
+}
+
+function validateCollectionNames(collectionName) {
+  if (!Object.keys(collections).includes(collectionName)){
+    const error = new Error(`Invalid collectionName: ${collectionName}`)
+    error.status = 404
+    throw error
+  }
+}
 
 function decorateFastifyInstance(fastify, opts) {
-
-  const collections = {
-    authors: "authors",
-    books: "books"
-  }
 
   async function exists(condictions) {
     return existsIn(opts.collectionName, condictions)
   }
 
   async function existsIn(collectionName, condictions) {
+    validateCollectionNames(collectionName)
     const collection = fastify.mongo.db.collection(collectionName)
     const items = await collection.find(condictions).toArray()
     return items.length
@@ -24,6 +32,7 @@ function decorateFastifyInstance(fastify, opts) {
   }
 
   async function createIn(collectionName, item, callback = undefined) {
+    validateCollectionNames(collectionName)
     const collection = fastify.mongo.db.collection(collectionName)
     const result = await collection.insertOne(item)
 
@@ -106,6 +115,7 @@ function decorateFastifyInstance(fastify, opts) {
 }
 
 async function fastifyDatabase(fastify, opts) {
+  validateCollectionNames(opts?.collectionName)
   decorateFastifyInstance(fastify, opts)
 }
 

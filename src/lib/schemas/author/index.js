@@ -3,6 +3,10 @@
 const { list } = require('./list')
 const { mongoId } = require('../common')
 
+/**
+* Author model.
+* @property {String} author - Author name.
+*/
 const author = {
   type: 'object',
   additionalProperties: false,

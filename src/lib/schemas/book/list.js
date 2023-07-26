@@ -1,6 +1,15 @@
 'use strict'
 
-const list = 
+/**
+* Book model list.
+* @property {Array} items - Author`s list.
+* @property {String} id - Book id.
+* @property {String} book - Book name.
+* @property {String} edition - Book edition.
+* @property {String} year - Book year.
+* @property {String} authors - Book author list.
+*/
+const list =
 {
   type: 'object',
   properties: {

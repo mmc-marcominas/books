@@ -1,5 +1,11 @@
 'use strict'
 
+/**
+* Author model list.
+* @property {Array} items - Author`s list.
+* @property {String} id - Author id.
+* @property {String} author - Author name.
+*/
 const list =
 {
   type: 'object',

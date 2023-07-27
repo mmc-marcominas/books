@@ -1,6 +1,7 @@
 port := 3000
 url := http://localhost:$(port)
 book := '{ "book": "A família Dorta Almeida - Segunda Edição", "edition": 2, "year": 2023, "authors": [ "Marco Almeida", "Maria Tereza" ] }'
+bookV2 := '{ "book": "Família Dorta Almeida", "edition": 2, "year": 2023, "authors": [ "Marco Antônio", "Maria Tereza", "Clara Beatriz", "Molly & Nala doggies" ] }'
 
 # Usage samples:
 # 
@@ -11,8 +12,11 @@ book := '{ "book": "A família Dorta Almeida - Segunda Edição", "edition": 2, 
 #   make upload-author file="./docs/authors.csv"
 #   make test-author
 
-# make get-books
-# make post-book
+# 	make get-books
+#   make post-book
+#   make put-book id=61742e31dda30cab65317784
+#   make delete-book id=61742e31dda30cab65317784
+#   make test-book
 
 get-authors:
 		@curl \
@@ -78,6 +82,21 @@ test-book:
 		@make post-book
 		@make get-books
 		@make get-authors
+
+put-book:
+		@echo $(bookV2)
+		@curl \
+				--silent \
+				-X PUT $(url)/books/$(id) \
+				-H 'Content-Type: application/json' \
+				-d $(bookV2) \
+				| jq .
+
+delete-book:
+		@curl \
+				--silent \
+				-X DELETE $(url)/books/$(id) \
+				| jq .
 
 start:
 		@docker run --rm -d -p 27017:27017 --name mongo-books mongo:4

@@ -1,5 +1,7 @@
 'use strict'
 
+const { notFoundError } = require('../common')
+
 /** 
 * Remove a document of books collection.
 * @param {Request} request - HTTP request object with id in params.
@@ -14,5 +16,8 @@ module.exports = async function deleteBook(request, reply) {
     throw notFoundError('Book', id)
   }
 
-  return { id }
+  return {
+    id: id,
+    message: "Book deleted successfully"
+  }
 }

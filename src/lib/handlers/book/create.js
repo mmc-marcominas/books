@@ -24,7 +24,7 @@ module.exports = async function createBook(request, reply) {
 
   const result = await this.database.create({ ...request.body })
   const message = {
-    id: result.Id,
+    id: result.id,
     message: 'Book created successfully'
   }
 

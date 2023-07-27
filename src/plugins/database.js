@@ -68,6 +68,43 @@ function decorateFastifyInstance(fastify, opts) {
     return result
   }
 
+
+  /** 
+  * Update a document on default collection according value sent on id param and values.
+  * @param {String} id - String representing id of document to be updated - it will be parsed on a ObjectId.
+  * @param {Object} values - A function to be executed on return statement if specified.
+  * @return {Object} Brief description of the returning value here.
+  */
+  async function update(id, values) {
+    const collection = fastify.mongo.db.collection(opts.collectionName)
+    const result = await collection.updateOne(
+      { _id: fastify.mongo.ObjectId(id) },
+      { $set: values }
+    )
+    const updated = result.matchedCount !== 0
+
+    return { updated }
+  }
+
+  /** 
+  * Remove a document on default collection according value sent on id param.
+  * @param {String} id - String representing id of document to be updated - it will be parsed on a ObjectId.
+  * @param {Function} callback - A function to be executed on return statement if specified.
+  * @return {Object} It will return document deleted id or callback execution results if sent a callback.
+  */
+  async function deleteOne(id, callback = undefined) {
+    const collection = fastify.mongo.db.collection(opts.collectionName)
+    const result = await collection.deleteOne({
+      _id: fastify.mongo.ObjectId(id)
+    })
+
+    if (callback) {
+      return callback(result)
+    }
+
+    return { deleted: result.deletedCount > 0 }
+  }
+
   function normalize(book) {
     const fields = Object.entries(book)
       .filter(([_, v]) => v != null)
@@ -94,7 +131,9 @@ function decorateFastifyInstance(fastify, opts) {
     parseAuthor,
 
     create,
-    read
+    read,
+    update,
+    delete: deleteOne
   }
 
   if (!fastify.database) {

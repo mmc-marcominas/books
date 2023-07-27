@@ -3,8 +3,11 @@ url := http://localhost:$(port)
 
 # Usage samples:
 # 
-# make get-authors 
-# make post-author author="Author name"
+#   make get-authors 
+#   make post-author author="Author name"
+#   make put-author author="Author name changed" id=61742e31dda30cab65317784
+#   make delete-author id=61742e31dda30cab65317784
+#   make test-author
 
 get-authors:
 		@curl \
@@ -18,6 +21,20 @@ post-author:
 				-X POST $(url)/authors \
 				-H 'Content-Type: application/json' \
 				-d '{"author":"$(author)"}' \
+				| jq .
+
+put-author:
+		@curl \
+				--silent \
+				-X PUT $(url)/authors/$(id) \
+				-H 'Content-Type: application/json' \
+				-d '{"author":"$(author)"}' \
+				| jq .
+
+delete-author:
+		@curl \
+				--silent \
+				-X DELETE $(url)/authors/$(id) \
 				| jq .
 
 test-author:

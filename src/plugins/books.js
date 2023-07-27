@@ -21,6 +21,19 @@ function bookPlugin(app, opts, next) {
     }
   }, handlers.readBooks)
 
+  app.put('/books/:id', {
+    schema: {
+      params: schemas.id,
+      body: schemas.update
+    }
+  }, handlers.updateBook)
+
+  app.delete('/books/:id', {
+    schema: {
+      params: schemas.id
+    }
+  }, handlers.deleteBook)
+
   next()
 }
 

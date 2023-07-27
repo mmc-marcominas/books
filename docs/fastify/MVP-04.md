@@ -9,20 +9,20 @@ Deliveries:
 ## Applied principles
 
  * DRY & KISS
+
    * use make approach to test endpoint
    * data access based on fastify plugins
+
  * MVP
+
    * deliver a POST endpoint that insert an book
    * deliver a GET endpoint that returns book list
    * deliver a Makefile with tests saving and retrieving books
 
 ## Implementation details
 
-Database access is implemented by this [database plugin](../../src/plugins/database.js) with:
-
- * handle file upload done by `@fastify/multipart` plugin.
- * a [handler](../../src/lib/handlers/author/upload.js) with business rule.
- * a [handler](../../src/lib/handlers/file.js) with file upload implementation.
+ * a [handler](../../src/lib/handlers/book/create.js) with creation rules.
+ * a [handler](../../src/lib/handlers/book/read.js) with deletion rules.
 
 ## Run tests
 

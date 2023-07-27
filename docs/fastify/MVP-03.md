@@ -8,9 +8,12 @@ Deliveries:
 ## Applied principles
 
  * DRY & KISS
+ 
    * use make approach to test endpoint
    * data access based on fastify plugins
+ 
  * MVP
+ 
    * deliver a POST endpoint to authors bulk insertion
    * deliver a Makefile with bulk insertion authors tests
 

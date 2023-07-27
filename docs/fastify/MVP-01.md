@@ -10,10 +10,13 @@ Deliveries:
 ## Applied principles
 
  * DRY & KISS
+
    * create projet from zero
    * use a simple data access implementation based on fastify plugins
    * use make approach to test endpoint
+ 
  * MVP
+ 
    * deliver a POST endpoint that insert an author
    * deliver a GET endpoint that returns author list
    * deliver a Makefile with tests saving and retrieving authors

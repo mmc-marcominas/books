@@ -9,9 +9,12 @@ Deliveries:
 ## Applied principles
 
  * DRY & KISS
+ 
    * use make approach to test endpoint
    * data access based on fastify plugins
+ 
  * MVP
+ 
    * deliver a PUT endpoint that update an author
    * deliver a DELETE endpoint that delete an author
    * deliver a Makefile with updating and deleting authors tests

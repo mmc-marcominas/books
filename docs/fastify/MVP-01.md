@@ -2,9 +2,9 @@
 
 Deliveries:
 
- * a basic implementation that expose an author route
- * a GET endpoint that returns an author list ordered by id
- * a database in sqlite3 to store author records
+ * a POST endpoint that insert an author
+ * a GET endpoint that returns an author list
+ * a database plugin to use MongoDB as persistence
  * steps documentation to do it from scratch
 
 ## Applied principles
@@ -17,6 +17,48 @@ Deliveries:
    * deliver a POST endpoint that insert an author
    * deliver a GET endpoint that returns author list
    * deliver a Makefile with tests saving and retrieving authors
+
+## Implementatio details
+
+Database access is implemented by thius [database plung](../../src/plugins/database.js) with:
+
+ * a `validateCollectionNames` method to force use of `collections` enum to set name of colletion to be used by database instance.
+ * a `exists` method to be used on creation and avoid duplication insertion since name is the only value on document for now.
+ * a `create` nethod to be used on document creation.
+ * a `read` nethod to be used on documents retrieving.
+ * a `parseAuthor` to standardize author model.
+
+Validate collection name of an instance is very important because on plugin declaration name must be specified hardcoded, example:
+
+``` javascript
+function authorPlugin(app, opts, next) {
+  app.register(require('fastify-mongodb'), opts.mongo)
+  app.register(require('./database'), { collectionName: 'authors' })
+
+  ...
+
+  next()
+}
+```
+
+Thinking on maintenabilty, [handlers](../../src/lib/handlers/author/) and [schemas](../../src/lib/schemas/author/) where implemented in separated files.
+
+``` bash
+── src
+   ├── app.js
+   ├── lib
+   │   ├── handlers
+   │   │   └── author
+   │   │       ├── create.js
+   │   │       ├── index.js
+   │   │       └── read.js
+   │   └── schemas
+   │       ├── author
+   │       │   ├── author.js
+   │       │   ├── index.js
+   │       │   └── list.js
+   │       └── common.js
+```
 
 ## Run tests
 

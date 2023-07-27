@@ -21,6 +21,19 @@ function authorPlugin(app, opts, next) {
     }
   }, handlers.readAuthors)
 
+  app.put('/authors/:id', {
+    schema: {
+      params: schemas.id,
+      body: schemas.update
+    }
+  }, handlers.updateAuthor)
+
+  app.delete('/authors/:id', {
+    schema: {
+      params: schemas.id
+    }
+  }, handlers.deleteAuthor)
+
   next()
 }
 

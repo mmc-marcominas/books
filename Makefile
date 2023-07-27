@@ -1,5 +1,6 @@
 port := 3000
 url := http://localhost:$(port)
+book := '{ "book": "A família Dorta Almeida - Segunda Edição", "edition": 2, "year": 2023, "authors": [ "Marco Almeida", "Maria Tereza" ] }'
 
 # Usage samples:
 # 
@@ -9,6 +10,9 @@ url := http://localhost:$(port)
 #   make delete-author id=61742e31dda30cab65317784
 #   make upload-author file="./docs/authors.csv"
 #   make test-author
+
+# make get-books
+# make post-book
 
 get-authors:
 		@curl \
@@ -52,6 +56,27 @@ test-author:
 		@make post-author author="Clara Beatriz"
 		@make get-authors
 		@make upload-author file="./docs/authors.csv"
+		@make get-authors
+
+get-books:
+		@curl \
+				--silent $(url)/books \
+				-H 'Authorization: $(auth)' \
+				| jq .
+
+post-book:
+		@echo $(book)
+		@curl \
+				--silent \
+				-X POST $(url)/books \
+				-H 'Content-Type: application/json' \
+        -d $(book) \
+				| jq .
+
+test-book:
+		@make get-books
+		@make post-book
+		@make get-books
 		@make get-authors
 
 start:

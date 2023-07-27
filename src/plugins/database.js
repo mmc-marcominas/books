@@ -28,10 +28,21 @@ function decorateFastifyInstance(fastify, opts) {
   * @param {Object} conditions - A valid filter to be applyed on query.
   * @return {Boolean} If some value returned, true otherwise false.
   */
-  async function exists(conditions) {
-    validateCollectionNames(opts.collectionName)
-    const collection = fastify.mongo.db.collection(opts.collectionName)
-    const items = await collection.find(conditions).toArray()
+  async function exists(condictions) {
+    return existsIn(opts.collectionName, condictions)
+  }
+
+  /**
+  * Check if a given filter return some value from database.
+  * @summary Check if a given filter return some value on a collection according valid collectionName param sent.
+  * @param {String} collectionName - Collection name that must be on enum collections  - it's value must be on collections enum so use enum to avoid typos.
+  * @param {Object} condictions - A valid filter to be applyed on query.
+  * @return {Boolean} If some value returned by query result, true otherwise false.
+  */
+  async function existsIn(collectionName, condictions) {
+    validateCollectionNames(collectionName)
+    const collection = fastify.mongo.db.collection(collectionName)
+    const items = await collection.find(condictions).toArray()
     return items.length
   }
 
@@ -42,8 +53,19 @@ function decorateFastifyInstance(fastify, opts) {
   * @return {Object} It will return document inserted id or callback executionresults if sent a callback.
   */
   async function create(item, callback = undefined) {
-    validateCollectionNames(opts.collectionName)
-    const collection = fastify.mongo.db.collection(opts.collectionName)
+    return createIn(opts.collectionName, item, callback)
+  }
+
+  /** 
+  * Create a document on a specified collection.
+  * @param {String} collectionName - Name of collection that must be on enum collections  - it's value be on enum collections so use this enum to avoid any typo.
+  * @param {Object} item - Documento to be created.
+  * @param {Function} callback - A function to be executed on return statement if specified.
+  * @return {Object} It will return document inserted id or callback execution results if sent a callback.
+  */
+  async function createIn(collectionName, item, callback = undefined) {
+    validateCollectionNames(collectionName)
+    const collection = fastify.mongo.db.collection(collectionName)
     const result = await collection.insertOne(item)
 
     if (callback) {
@@ -125,10 +147,30 @@ function decorateFastifyInstance(fastify, opts) {
     return normalize(document)
   }
 
+  /** 
+  * Parse given values on a book model.
+  * @param {Object} values - Object with property of a book to be parsed.
+  * @return {Object} A book model with valid properties sent on values param.
+  */
+  function parseBook(values) {
+    const { book, edition, year, authors } = values
+    const document = {
+      book: book,
+      edition: edition,
+      year: year,
+      authors: authors
+    }
+
+    return normalize(document)
+  }
+
   const database = {
     collections,
     exists,
+    existsIn,
+    createIn,
     parseAuthor,
+    parseBook,
 
     create,
     read,

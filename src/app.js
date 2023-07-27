@@ -2,6 +2,7 @@
 
 const fp = require('fastify-plugin')
 const authorPlugin = require('./plugins/authors')
+const multipart = require('@fastify/multipart')
 
 module.exports = fp(async function fastify(app, opts) {
   await app.register(require('@fastify/env'), {
@@ -15,6 +16,8 @@ module.exports = fp(async function fastify(app, opts) {
       }
     }
   })
+
+  app.register(multipart)
 
   app.register(authorPlugin, {
     mongo: {

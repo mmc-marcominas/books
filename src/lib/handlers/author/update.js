@@ -7,7 +7,7 @@ const { notFoundError } = require('../common')
 * @summary Update a author according id sent on HTTP params and value from request body.
 * @param {Request} request - HTTP request object with id in params and author in body.
 * @param {Response} reply - HTTP response object.
-* @return {Object} Return object id and success messaga if update occours otherwise throw error.
+* @return {Object} Return object id and success message if update occours otherwise throw error.
 */
 module.exports = async function updateAuthor(request, reply) {
   const { id } = request.params

@@ -1,4 +1,4 @@
-# MVP-01: GET authors endpoint
+# MVP-01: GET and POST authors endpoints
 
 Deliveries:
 
@@ -10,7 +10,7 @@ Deliveries:
 ## Applied principles
 
  * DRY & KISS
-   * make projet from zero
+   * create projet from zero
    * use a simple data access implementation based on fastify plugins
    * use make approach to test endpoint
  * MVP
@@ -18,9 +18,9 @@ Deliveries:
    * deliver a GET endpoint that returns author list
    * deliver a Makefile with tests saving and retrieving authors
 
-## Implementatio details
+## Implementation details
 
-Database access is implemented by thius [database plung](../../src/plugins/database.js) with:
+Database access is implemented by this [database plugin](../../src/plugins/database.js) with:
 
  * a `validateCollectionNames` method to force use of `collections` enum to set name of colletion to be used by database instance.
  * a `exists` method to be used on creation and avoid duplication insertion since name is the only value on document for now.

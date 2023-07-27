@@ -1,6 +1,6 @@
-# Books using a Node Express template project
+# Books using a fastify implementation
 
-This solution intends to be a implementation to a simple REST API offering books and authors endpoints.
+This solution intends to be a implementation to a simple REST API offering authors and books endpoints.
 
 This project aims to deliver an API with books and it's authors endpoints able to:
 
@@ -33,7 +33,7 @@ $ make restart
 
 Use `make clean` to remove `node_modules` directory and install app dependencies.
 
-First start use `make start` - it will start docker instance and app. Next times try `make restart` - it will stop docker instance, start again and run app.
+At first start use `make start` - it will start docker instance and app. Next times try `make restart` - it will stop docker instance, start again and run app.
 
 Check test functionalities reading available test on [Makefile](../Makefile).
 
@@ -51,3 +51,22 @@ Deliveries:
  * steps documentation to do it from scratch
 
 Delivery details are in [this MVP-01.md](./fastify/MVP-01.md) doc.
+
+# MVP-02: PUT and DELETE authors endpoints
+
+Deliveries:
+
+ * a PUT endpoint that update an author
+ * a DELETE endpoint that delete an author
+ * database plugin with update and delete operations
+
+Delivery details are in [this MVP-02.md](./fastify/MVP-02.md) doc.
+
+# MVP-03: POST upload authors endpoint
+
+Deliveries:
+
+ * a POST endpoint that bulk insert author sent in a csv vile
+ * upload tests
+
+Delivery details are in [this MVP-03.md](./fastify/MVP-03.md) doc.

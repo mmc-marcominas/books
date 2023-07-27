@@ -1,12 +1,12 @@
 'use strict'
 
 const { mongoId } = require('../common')
-const { author } = require('./author')
+const { book } = require('./book')
 const { list } = require('./list')
 
 module.exports = {
   id: mongoId,
-  input: author,
-  update: author,
+  input: book,
+  update: book,
   list
 }

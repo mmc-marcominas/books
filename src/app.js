@@ -1,6 +1,7 @@
 'use strict'
 
 const fp = require('fastify-plugin')
+const bookPlugin = require('./plugins/books')
 const authorPlugin = require('./plugins/authors')
 const multipart = require('@fastify/multipart')
 
@@ -20,6 +21,12 @@ module.exports = fp(async function fastify(app, opts) {
   app.register(multipart)
 
   app.register(authorPlugin, {
+    mongo: {
+      url: app.config.MONGO_URL
+    }
+  })
+
+  app.register(bookPlugin, {
     mongo: {
       url: app.config.MONGO_URL
     }

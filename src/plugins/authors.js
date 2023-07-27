@@ -34,6 +34,10 @@ function authorPlugin(app, opts, next) {
     }
   }, handlers.deleteAuthor)
 
+  app.post('/authors/upload', {
+
+  }, handlers.uploadAuthor)
+
   next()
 }
 

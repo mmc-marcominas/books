@@ -7,6 +7,7 @@ url := http://localhost:$(port)
 #   make post-author author="Author name"
 #   make put-author author="Author name changed" id=61742e31dda30cab65317784
 #   make delete-author id=61742e31dda30cab65317784
+#   make upload-author file="./docs/authors.csv"
 #   make test-author
 
 get-authors:
@@ -37,11 +38,20 @@ delete-author:
 				-X DELETE $(url)/authors/$(id) \
 				| jq .
 
+upload-author:
+		@curl \
+				--silent \
+				-X POST $(url)/authors/upload \
+				-F 'file=@"$(file)"' \
+				| jq .
+
 test-author:
 		@make get-authors
 		@make post-author author="Marco Almeida"
 		@make post-author author="Maria Tereza"
 		@make post-author author="Clara Beatriz"
+		@make get-authors
+		@make upload-author file="./docs/authors.csv"
 		@make get-authors
 
 start:

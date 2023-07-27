@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fastify/env": "^4.2.0",
+    "@fastify/multipart": "^7.7.2",
     "fastify": "^4.20.0",
     "fastify-cli": "^5.7.1",
     "fastify-mongodb": "^4.2.0",
